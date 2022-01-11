@@ -16,24 +16,31 @@ public class TicTacToe {
     private static final char DOT_EMPTY = '.';                                    //Пустое поле;
     private static int fieldSizeX;                                                //Объявляем размер поля по оси Х;
     private static int fieldSizeY;                                                //Объявляем размер поля по оси Y;
-
+    private static String playerOneName = " ";
     private static char[][] field;                                                //Игровое поле;
+    
+    private static int scoreHuman = 0;
+    private static int scoreAI = 0;
 
     public static void main(String[] args) {
         fieldSizeX = 3;                                                                  //Размер поля по Х;
         fieldSizeY = 3;
+        
         while (true) {
+            System.out.printf("%sПредставьтесь пожалуйста >>>>>> ", playerOneName) ;
+            playerOneName = SCANNER.nextLine();
             initField();
             pintField();
 
             while (true) {
                 humanTurn();
                 pintField();
-                if (gameCheck(DOT_HIMAN, "Вы великолепны!!!  Победа!")) break;
+                if (gameCheck(DOT_HIMAN, String.format("%s, Вы великолепны!!!  Победа!", playerOneName))) break;
                 aiTurn();
                 pintField();
                 if (gameCheck(DOT_AI, "Компьютер победил!!!")) break;
             }
+            System.out.printf("SCORE IS:\n%s: %d || AI: %d\n", playerOneName, scoreHuman, scoreAI);
             System.out.println(("Сыграем еще? >>>> Y  или N"));
             if (!SCANNER.next().toLowerCase().equals("y")) break;                       // toLowerCase() ?
         }
@@ -41,6 +48,11 @@ public class TicTacToe {
 
     private static boolean gameCheck(char dot, String s) {
         if (checkWin(dot)) {
+            if (dot == DOT_HIMAN) {
+                scoreHuman++;
+            } else {
+                scoreAI++;
+            }
             System.out.println(s);
             return true;
         }
@@ -90,7 +102,7 @@ public class TicTacToe {
     private static void humanTurn() {
         int x, y;
         do {
-            System.out.println("Введите координаты х и у через пробел >>>>>");
+            System.out.printf("%s Введите координаты х и у через пробел >>>>>", playerOneName);
             x = SCANNER.nextInt() - 1;
             y = SCANNER.nextInt() - 1;
         } while (!isCellValid(x, y) || !isCellEmpty(x, y));
