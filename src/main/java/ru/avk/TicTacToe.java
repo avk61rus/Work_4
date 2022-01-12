@@ -1,6 +1,5 @@
 package ru.avk;
 
-import java.awt.datatransfer.StringSelection;
 import java.util.Random;
 import java.util.Scanner;
 
@@ -8,7 +7,7 @@ import java.util.Scanner;
  * Tic - tac - toe
  */
 public class TicTacToe {
-
+    
     private static final Random RANDOM = new Random();                            //Случайный выбор;
     private static final Scanner SCANNER = new Scanner(System.in);                //Получение данных от игрока;
     private static final char DOT_HIMAN = 'X';                                    //Фишка игрока;
@@ -21,17 +20,17 @@ public class TicTacToe {
     
     private static int scoreHuman = 0;
     private static int scoreAI = 0;
-
+    
     public static void main(String[] args) {
         fieldSizeX = 3;                                                                  //Размер поля по Х;
         fieldSizeY = 3;
         
         while (true) {
-            System.out.printf("%sПредставьтесь пожалуйста >>>>>> ", playerOneName) ;
+            System.out.printf("%sПредставьтесь пожалуйста >>>>>> ", playerOneName);
             playerOneName = SCANNER.nextLine();
             initField();
             pintField();
-
+            
             while (true) {
                 humanTurn();
                 pintField();
@@ -45,7 +44,7 @@ public class TicTacToe {
             if (!SCANNER.next().toLowerCase().equals("y")) break;                       // toLowerCase() ?
         }
     }
-
+    
     private static boolean gameCheck(char dot, String s) {
         if (checkWin(dot)) {
             if (dot == DOT_HIMAN) {
@@ -62,24 +61,40 @@ public class TicTacToe {
         }
         return false;
     }
-
+    
     private static boolean checkWin(char c) {
-        //horiz
-        if (field[0][0] == c && field[0][1] == c && field[0][2] == c) return true;
-        if (field[1][0] == c && field[1][1] == c && field[1][2] == c) return true;
-        if (field[2][0] == c && field[2][1] == c && field[2][2] == c) return true;
+//        //horiz
+//        if (field[0][0] == c && field[0][1] == c && field[0][2] == c) return true;
+//        if (field[1][0] == c && field[1][1] == c && field[1][2] == c) return true;
+//        if (field[2][0] == c && field[2][1] == c && field[2][2] == c) return true;
+//
+//        //vert
+//        if (field[0][0] == c && field[1][0] == c && field[2][0] == c) return true;
+//        if (field[0][1] == c && field[1][1] == c && field[2][1] == c) return true;
+//        if (field[0][2] == c && field[1][2] == c && field[2][2] == c) return true;
+//
+//        //Diag
+//        if (field[0][0] == c && field[1][1] == c && field[2][2] == c) return true;
+//        if (field[2][0] == c && field[1][1] == c && field[0][2] == c) return true;
+//        return false;
+        int a = 0;
+        for (int y = 0; y < fieldSizeY - 1; y++) {
+            for (int x = 0; x < fieldSizeX - 1; x++) {
+                int i;
+                a = 0;
+                for (i = 0; i < fieldSizeX - 1; i++) {
+                    if (field[y][x + i] != c && (fieldSizeX) != i+1) return false;
 
-        //vert
-        if (field[0][0] == c && field[1][0] == c && field[2][0] == c) return true;
-        if (field[0][1] == c && field[1][1] == c && field[2][1] == c) return true;
-        if (field[0][2] == c && field[1][2] == c && field[2][2] == c) return true;
-
-        //Diag
-        if (field[0][0] == c && field[1][1] == c && field[2][2] == c) return true;
-        if (field[2][0] == c && field[1][1] == c && field[0][2] == c) return true;
-        return false;
+                }
+//                for (i= 0; i < fieldSizeX-1; y++) {if (field[y + i][y] == c); a = a+1; continue;} if (a == fieldSizeX-1) return true; a=0;
+//                for (i= 0; i < fieldSizeX-1; y++) {if (field[y + i][y+ i] == c); a = a+1; continue;} if (a == fieldSizeX-1) return true; a=0;
+//                for (i= 0; i < fieldSizeX-1; y++) {if (field[y][fieldSizeX - x-1] == c ); a = a+1; continue;} if (a == fieldSizeX-1) return true; a=0;
+            return true;
+            }
+        }
+            return false;
     }
-
+    
     private static boolean checkDraw() {
         for (int y = 0; y < fieldSizeY; y++) {
             for (int x = 0; x < fieldSizeX; x++) {
@@ -88,17 +103,17 @@ public class TicTacToe {
         }
         return true;
     }
-
+    
     private static void aiTurn() {
         int x, y;
         do {
             x = RANDOM.nextInt(fieldSizeX);
             y = RANDOM.nextInt(fieldSizeY);
         } while (!isCellEmpty(x, y));
-
+        
         field[y][x] = DOT_AI;
     }
-
+    
     private static void humanTurn() {
         int x, y;
         do {
@@ -106,19 +121,19 @@ public class TicTacToe {
             x = SCANNER.nextInt() - 1;
             y = SCANNER.nextInt() - 1;
         } while (!isCellValid(x, y) || !isCellEmpty(x, y));
-
+        
         field[y][x] = DOT_HIMAN;
     }
-
+    
     private static boolean isCellValid(int x, int y) {
         return x >= 0 && y >= 0 && x < fieldSizeY && y < fieldSizeY;
     }
-
-
+    
+    
     private static boolean isCellEmpty(int x, int y) {
         return field[y][x] == DOT_EMPTY;
     }
-
+    
     private static void initField() {                                                     //Инициализируем угровое поле
         field = new char[fieldSizeY][fieldSizeX];                                           //представляющее собой char массив;
         for (int y = 0; y < fieldSizeY; y++) {
@@ -127,13 +142,13 @@ public class TicTacToe {
             }
         }
     }
-
+    
     private static void pintField() {
         System.out.print("+");
         for (int i = 0; i < fieldSizeX * 2 + 1; i++)
             System.out.print((i % 2 == 0) ? "-" : i / 2 + 1);
         System.out.println();
-
+        
         for (int i = 0; i < fieldSizeY; i++) {
             System.out.print(i + 1 + "|");
             for (int j = 0; j < fieldSizeX; j++)
@@ -143,10 +158,10 @@ public class TicTacToe {
         for (int k = 0; k < fieldSizeX * 2 + 1; k++)
             System.out.print("-");
         System.out.println();
-
-
+        
+        
     }
-
-
+    
+    
 }
 
