@@ -63,32 +63,13 @@ public class TicTacToe {
     }
     
     private static boolean checkWin(char c) {
-//        //horiz
-//        if (field[0][0] == c && field[0][1] == c && field[0][2] == c) return true;
-//        if (field[1][0] == c && field[1][1] == c && field[1][2] == c) return true;
-//        if (field[2][0] == c && field[2][1] == c && field[2][2] == c) return true;
-//
-//        //vert
-//        if (field[0][0] == c && field[1][0] == c && field[2][0] == c) return true;
-//        if (field[0][1] == c && field[1][1] == c && field[2][1] == c) return true;
-//        if (field[0][2] == c && field[1][2] == c && field[2][2] == c) return true;
-//
-//        //Diag
-//        if (field[0][0] == c && field[1][1] == c && field[2][2] == c) return true;
-//        if (field[2][0] == c && field[1][1] == c && field[0][2] == c) return true;
-//        return false;
-        int a = 0;
+
         for (int y = 0; y < fieldSizeY - 1; y++) {
             for (int x = 0; x < fieldSizeX - 1; x++) {
                 int i;
-                a = 0;
                 for (i = 0; i < fieldSizeX - 1; i++) {
                     if (field[y][x + i] != c && (fieldSizeX) != i+1) return false;
-
                 }
-//                for (i= 0; i < fieldSizeX-1; y++) {if (field[y + i][y] == c); a = a+1; continue;} if (a == fieldSizeX-1) return true; a=0;
-//                for (i= 0; i < fieldSizeX-1; y++) {if (field[y + i][y+ i] == c); a = a+1; continue;} if (a == fieldSizeX-1) return true; a=0;
-//                for (i= 0; i < fieldSizeX-1; y++) {if (field[y][fieldSizeX - x-1] == c ); a = a+1; continue;} if (a == fieldSizeX-1) return true; a=0;
             return true;
             }
         }
